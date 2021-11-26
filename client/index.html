@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <form>
+            <input type="file" id="imageInput" />
+            <button type="submit">Submit</button>
+        </form>
+        <script>
+            const form = document.querySelector('form');
+            const imageInput = document.querySelector('#imageInput');
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const file = imageInput.files[0];
+
+                // get secure url from our server
+                const { url } = await fetch('http://localhost:9999/').then((res) => res.json());
+                console.log(url);
+
+                // post the image directly to the s3 bucket
+                await fetch(url, {
+                    method: 'put',
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                    body: file,
+                });
+
+                const imageUrl = url.split('?')[0];
+                console.log(imageUrl);
+
+                // display image
+                const img = document.createElement('img');
+                img.src = imageUrl;
+                img.style = 'width: 1500px';
+                document.body.appendChild(img);
+            });
+        </script>
+    </body>
+</html>
