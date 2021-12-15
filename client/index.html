@@ -16,47 +16,44 @@
         <script>
             const form = document.querySelector('form');
             const imageInput = document.querySelector('#imageInput');
-            form.addEventListener('submit', async(e) => {
+            form.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 const file = imageInput.files[0];
 
                 // get secure url from our server
-                const getUrl = await fetch('https://upload-image-123.azurewebsites.net/')
-                const {
-                    url
-                } = await getUrl.json()
-
+                const getUrl = await fetch('http://localhost:9999');
+                const { url } = await getUrl.json();
 
                 if (!file) {
-                    alert("Please put an image here!")
+                    alert('Please put an image here!');
                 } else {
-                // check if this is an image
-                const fileType = file.type
-                const acceptedFiletype = ["image/jpg", "image/jpeg", "image/png", "image/gif"]
+                    // check if this is an image
+                    const fileType = file.type;
+                    const acceptedFiletype = ['image/jpg', 'image/jpeg', 'image/png', 'image/gif'];
 
-                if (acceptedFiletype.indexOf(fileType) < 0) {
-                    alert(`Only accept ${acceptedFiletype.toString()}`)
-                } else {
-                    // post the image directly to the s3 bucket
-                    await fetch(url, {
-                        method: 'put',
-                        headers: {
-                            'Content-Type': fileType,
-                        },
-                        body: file,
-                    });
+                    if (acceptedFiletype.indexOf(fileType) < 0) {
+                        alert(`Only accept ${acceptedFiletype.toString()}`);
+                    } else {
+                        // post the image directly to the s3 bucket
+                        await fetch(url, {
+                            method: 'put',
+                            headers: {
+                                'Content-Type': fileType,
+                            },
+                            body: file,
+                        });
 
-                    const imageUrl = url.split('?')[0];
-                    console.log(imageUrl);
+                        const imageUrl = url.split('?')[0];
+                        console.log(imageUrl);
 
-                    // display image
-                    const img = document.createElement('img');
-                    img.src = imageUrl;
-                    img.style = 'width: 1500px';
-                    document.body.appendChild(img);
+                        // display image
+                        const img = document.createElement('img');
+                        img.src = imageUrl;
+                        img.style = 'width: 300px';
+                        document.body.appendChild(img);
+                    }
                 }
-            }
-        });
+            });
         </script>
     </body>
 </html>
