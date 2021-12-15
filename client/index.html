@@ -10,6 +10,8 @@
         <form>
             <input type="file" id="imageInput" />
             <button type="submit">Submit</button>
+            <br />
+            <br />
         </form>
         <script>
             const form = document.querySelector('form');
@@ -37,7 +39,7 @@
                 // display image
                 const img = document.createElement('img');
                 img.src = imageUrl;
-                img.style = 'width: 1500px';
+                img.style = 'width: 300px';
                 document.body.appendChild(img);
             });
         </script>
