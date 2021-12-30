@@ -1,5 +1,9 @@
 # UPLOAD IMAGE TO AMAZON S3
 
+## Link API
+
+https://upload-image-123.azurewebsites.net/
+
 ## Reference
 
 https://www.youtube.com/watch?v=yGYeYJpRWPM
